@@ -1,0 +1,5 @@
+CREATE DATABASE WP;
+CREATE USER 'aklaikel'@'1337.ma' IDENTIFIED BY 'aklaikel';
+GRANT ALL PRIVILEGES ON WP.* TO 'aklaikel'@'1337.ma';
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1qaz2wsx';
