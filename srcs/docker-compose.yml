@@ -1,5 +1,65 @@
 version: '3.3'
 
+networks:
+  warper-network:
+    driver: bridge
+
+volumes:
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/aklaikel/Desktop/inception/srcs/data/wp
+      o: bind
+
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      device:  /Users/aklaikel/Desktop/inception/srcs/data/db
+      o: bind
+
 services:
-  nginix:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/Mariadb
+    env_file:
+      - .env
+    networks:
+      - warper-network
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+  
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/WordPress
+    networks:
+      - warper-network
+    volumes:
+      - wp:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+  
+  nginx:
+    container_name: Nginx
+    build: ./requirements/Nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - warper-network
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    restart: unless-stopped
   
