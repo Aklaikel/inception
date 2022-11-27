@@ -1,0 +1,10 @@
+FROM debian:buster
+
+RUN apt-get update && && apk add --no-cache \
+        vsftpd
+
+COPY conf/vsftpd.conf /tmp/vsftpd.conf
+
+COPY conf/configure.sh /tmp/configure.sh
+
+ENTRYPOINT ["sh", "/tmp/configure.sh"]

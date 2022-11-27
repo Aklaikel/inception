@@ -62,4 +62,32 @@ services:
     depends_on:
       - wordpress
     restart: unless-stopped
+  site:
+    container_name: site
+    build: ./bonus/site
+    ports:
+      - "5000:5000"
+    networks:
+      - warper-network
+    env_file:
+      - .env
+    restart: unless-stopped
+  ftp_server:
+    container_name: ftp-server
+    build: ./bonus/ftp-server
+    ports:
+      - "443:443"
+    networks:
+      - warper-network
+    env_file:
+      - .env
+    restart: unless-stopped
+  adminer:
+    container_name: adminer
+    build: ./bonus/adminer
+    ports:
+      - "1337:1337"
+    networks:
+      - warper-network
+    restart: always
   
