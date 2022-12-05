@@ -1,7 +1,5 @@
-FROM  debian:buster
-
-RUN sudo apt-get update
-
-RUN sudo apt-get -y install cadvisor
-RUN sudo apt update
-RUN sudo apt -y install cadvisor
+FROM debian:buster
+RUN apt-get update && apt install curl -y
+RUN curl -L https://github.com/google/cadvisor/releases/download/v0.37.5/cadvisor -o /usr/bin/cadvisor
+RUN chmod +x /usr/bin/cadvisor
+CMD [ "cadvisor",  "-logtostderr", "--port=2000" ]

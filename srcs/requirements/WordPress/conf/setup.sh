@@ -9,8 +9,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	mkdir -p /var/www/html
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
-	wp core install
 	mv wp-cli.phar /usr/local/bin/wp
+	wp core install
 	wp core download --path=/var/www/html --allow-root
 	wp config create --dbname=$DB_NAME --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --path=/var/www/html --allow-root --skip-check
 	wp core install --url=$DOMAIN_NAME --title='inception' --admin_user=$ADMIN_NAME --admin_password=$ADMIN_PASS --admin_email=$ADMIN_EMAIL --allow-root --path=/var/www/html

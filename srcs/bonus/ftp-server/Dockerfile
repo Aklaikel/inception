@@ -1,10 +1,9 @@
 FROM debian:buster
 
-RUN apt-get update && && apk add --no-cache \
-        vsftpd
+RUN apt-get update && apt install -y vsftpd
 
-COPY conf/vsftpd.conf /tmp/vsftpd.conf
+RUN useradd -ms /bin/bash aklaikel
 
-COPY conf/configure.sh /tmp/configure.sh
+COPY ./tools/config.sh /var/www/setup.sh
 
-ENTRYPOINT ["sh", "/tmp/configure.sh"]
+ENTRYPOINT [ "bash", "/var/www/setup.sh" ]

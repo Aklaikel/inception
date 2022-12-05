@@ -18,6 +18,12 @@ volumes:
       type: none
       device:  /Users/aklaikel/Desktop/inception/srcs/data/db
       o: bind
+  ftp-data:
+    driver: local
+    driver_opts:
+      type: volume
+      device:  /Users/aklaikel/Desktop/inception/srcs/data/ftp
+      o: bind
 
 services:
   mariadb:
@@ -75,8 +81,10 @@ services:
   ftp_server:
     container_name: ftp-server
     build: ./bonus/ftp-server
+    volumes:
+      - "ftp-data:/home/"
     ports:
-      - "443:443"
+      - "21:21"
     networks:
       - warper-network
     env_file:
@@ -87,6 +95,31 @@ services:
     build: ./bonus/adminer
     ports:
       - "1337:1337"
+    networks:
+      - warper-network
+    depends_on:
+      - mariadb
+    restart: always
+  redis:
+    container_name: redis
+    build: ./bonus/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - warper-network
+    depends_on:
+      - wordpress
+    restart: always
+  cadvisor:
+    container_name: cadvisor
+    build: ./bonus/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "2000:2000"
     networks:
       - warper-network
     restart: always
