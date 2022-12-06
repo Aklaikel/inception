@@ -11,18 +11,11 @@ volumes:
       type: none
       device: /Users/aklaikel/Desktop/inception/srcs/data/wp
       o: bind
-
   db:
     driver: local
     driver_opts:
       type: none
       device:  /Users/aklaikel/Desktop/inception/srcs/data/db
-      o: bind
-  ftp-data:
-    driver: local
-    driver_opts:
-      type: volume
-      device:  /Users/aklaikel/Desktop/inception/srcs/data/ftp
       o: bind
 
 services:
@@ -82,9 +75,11 @@ services:
     container_name: ftp-server
     build: ./bonus/ftp-server
     volumes:
-      - "ftp-data:/home/"
+      - wp:/home/"
     ports:
       - "21:21"
+      - "20:20"
+      - "21000-21010:21000-21010"
     networks:
       - warper-network
     env_file:

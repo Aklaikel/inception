@@ -3,7 +3,7 @@
 service vsftpd start
 
 mkdir -p /var/run/vsftpd/empty
-mkdir -p /home/aklaikel
+mkdir -p /home/$FTP_USR
 echo $FTP_USR > /etc/vsftpd.userlist
 echo ${FTP_USR}:${FTP_PWD} | chpasswd
 chown -R ${FTP_USR}:${FTP_USR} /home/"${FTP_USR}"
