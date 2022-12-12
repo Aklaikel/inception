@@ -9,13 +9,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/aklaikel/Desktop/inception/srcs/data/wp
+      device: /home/aklaikel/data/wp
       o: bind
   db:
     driver: local
     driver_opts:
       type: none
-      device:  /Users/aklaikel/Desktop/inception/srcs/data/db
+      device:  /home/aklaikel/data/db
       o: bind
 
 services:
