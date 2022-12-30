@@ -105,7 +105,7 @@ services:
     depends_on:
       - wordpress
     restart: always
-  cadvisor:
+  cadvisor: 
     container_name: cadvisor
     build: ./bonus/cadvisor
     volumes:
